@@ -1,18 +1,17 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>MOVIE CATALOG</title>
-</head>
-<body>
-<table border="1" cellpadding="7" cellspacing="0" width="100%" height="100%">
-    <tr height = "15%">
-        <td colspan="2" bgcolor="#D3EDF6" align="center">
-            ${loggedUser} <a href="/moviecatalog/logout">logout</a>
-        </td>
+<%@ include file="common/header.jsp" %>
+
+<table border="1" cellpadding="7" cellspacing="0" align="center">
+    
+    <tr>
+        <td valign="top" align="center">${name}</td>
     </tr>
     <tr>
-        <td valign="top" align="center">${movie}</td>
+		<td>${genre} ${year} ${Staring} ${country}</td>    
+    </tr>
+    
+    <tr>
+    	<td>${description}</td>
     </tr>
 </table>
-</body>
-</html>
+
+<%@ include file="common/footer.jsp" %>

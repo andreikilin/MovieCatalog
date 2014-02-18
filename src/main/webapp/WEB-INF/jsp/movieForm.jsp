@@ -1,10 +1,4 @@
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>${movieFormActionTitle}</title>
-</head>
-<body>
+<%@ include file="common/header.jsp" %>
 
 <form action="${movieFormAction}">
     <b>Add new movie</b>
@@ -40,5 +34,5 @@
 
     <input type="submit" value = "${buttonAction}">
 </form>   </tr>
-</body>
-</html>
+
+<%@ include file="common/footer.jsp" %>
