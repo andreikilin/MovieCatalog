@@ -4,7 +4,6 @@ package net.muzichko.moviecatalog.service;
 import net.muzichko.moviecatalog.dao.GenreDao;
 import net.muzichko.moviecatalog.domain.Genre;
 import net.muzichko.moviecatalog.domain.GenreValidator;
-import net.muzichko.moviecatalog.domain.MovieCatalogEntity;
 import net.muzichko.moviecatalog.exception.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +60,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public List<MovieCatalogEntity> list() throws MovieCatalogSystemException, CantGetEntityListException {
+    public List<Genre> list() throws MovieCatalogSystemException, CantGetEntityListException {
 
         Connection connection = getConnection(dataSource, log);
         genreDao.setConnection(connection);

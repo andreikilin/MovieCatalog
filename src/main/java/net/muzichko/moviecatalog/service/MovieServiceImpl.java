@@ -35,7 +35,7 @@ public class MovieServiceImpl implements MovieService {
         try{
 
             movieDao.alreadyExists(movie);
-            MovieValidator.validate(movie);
+            //MovieValidator.validate(movie);
             movieDao.add(movie);
 
             connection.commit();
@@ -177,7 +177,7 @@ public class MovieServiceImpl implements MovieService {
         try{
 
             movieDao.alreadyExists(movie);
-            MovieValidator.validate(movie);
+            //MovieValidator.validate(movie);
             movieDao.update(movie);
 
             connection.commit();

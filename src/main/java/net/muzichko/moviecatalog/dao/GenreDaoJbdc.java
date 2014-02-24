@@ -2,7 +2,6 @@ package net.muzichko.moviecatalog.dao;
 
 
 import net.muzichko.moviecatalog.domain.Genre;
-import net.muzichko.moviecatalog.domain.MovieCatalogEntity;
 import net.muzichko.moviecatalog.exception.*;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
@@ -39,13 +38,26 @@ public class GenreDaoJbdc implements GenreDao {
 
         checkConnection();
 
-        String query = "insert into genres(name) values(?); ";
+        String query;
 
+        if (genre.getId() > 0) {
+        	query = "insert into genres(id, name) values(?, ?); ";
+        	
+        }else {
+        	query = "insert into genres(name) values(?); ";
+        }
+        
         String baseErrorMessage = "Genre wasn't added in DB " + genre.toString() + ". ";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setString(1, genre.getName());
+            //statement.setString(1, genre.getName());
+            if (genre.getId() > 0) {
+        		statement.setInt(1, genre.getId());
+        		statement.setString(2, genre.getName());
+        	}else {
+        		statement.setString(1, genre.getName());
+        	}
             int ok = statement.executeUpdate();
             if (ok == 0) {
                 String errorMessage = baseErrorMessage + "statement.executeUpdate(" + query + ") returns 0.";
@@ -63,13 +75,13 @@ public class GenreDaoJbdc implements GenreDao {
     }
 
     @Override
-    public List<MovieCatalogEntity> list() throws CantGetEntityListException, CantGetDBConnection {
+    public List<Genre> list() throws CantGetEntityListException, CantGetDBConnection {
 
         log.info("Getting list of genres.");
 
         checkConnection();
 
-        List<MovieCatalogEntity> genreList = new LinkedList<>();
+        List<Genre> genreList = new LinkedList<>();
 
         String query = "select * from genres order by name;";
 
@@ -110,13 +122,12 @@ public class GenreDaoJbdc implements GenreDao {
                     return new Genre(resultSet.getInt("id"),
                             resultSet.getString("name"));
                 } else {
-                    String errorMessage = baseErrorMessage + "No such genre in DB.";
+                	return null;
+                /* String errorMessage = baseErrorMessage + "No such genre in DB.";
                     log.error(errorMessage);
-                    throw new NoSuchEntityException(errorMessage);
+                    throw new NoSuchEntityException(errorMessage); */
                 }
             }
-        } catch (NoSuchEntityException e) {
-            throw e;
         } catch (Exception e) {
             log.error(baseErrorMessage + query);
             throw new CantGetEntityListException(baseErrorMessage + query, e);

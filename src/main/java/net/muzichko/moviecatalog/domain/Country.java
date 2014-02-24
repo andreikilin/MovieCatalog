@@ -1,6 +1,6 @@
 package net.muzichko.moviecatalog.domain;
 
-public class Country implements MovieCatalogEntity {
+public class Country {
 
     private int id;
     private String name;
@@ -17,12 +17,10 @@ public class Country implements MovieCatalogEntity {
         this.name = name;
     }
 
-    @Override
     public int getId() {
         return id;
     }
 
-    @Override
     public String getCaption() {
         return name;
     }
@@ -39,6 +37,7 @@ public class Country implements MovieCatalogEntity {
         this.name = name;
     }
 
+
     @Override
     public String toString() {
         return "Country{" +
@@ -47,6 +46,12 @@ public class Country implements MovieCatalogEntity {
                 '}';
     }
 
+/*    
+    @Override
+    public String toString() {
+        return name;
+    }
+*/    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

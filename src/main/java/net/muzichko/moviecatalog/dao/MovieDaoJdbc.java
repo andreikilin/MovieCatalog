@@ -38,14 +38,39 @@ public class MovieDaoJdbc implements MovieDao {
 
         checkConnection();
 
-        String query = "insert into movies(name, idgenre, idcountry, description, starring, year)" +
-                " values(?, ?, ?, ?, ?, ?); ";
-
+        String query;
+        
+        if (movie.getId() > 0) {
+        	query = "insert into movies(id, name, idgenre, idcountry, description, starring, year)" +
+                    " values(?, ?, ?, ?, ?, ?, ?); ";
+        	
+        }else {
+        	query = "insert into movies(name, idgenre, idcountry, description, starring, year)" +
+                    " values(?, ?, ?, ?, ?, ?); ";
+        }
+        
         String baseErrorMessage = "Movie wasn't added in DB " + movie.toString() + ". ";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-
-            fillStatementArgs(movie, statement);
+        	
+        	if (movie.getId() > 0) {
+        		statement.setInt(1, movie.getId());
+        		statement.setString(2, movie.getName());
+        		statement.setInt(3,movie.getGenre().getId());
+        		statement.setInt(4, movie.getCountry().getId());
+        		statement.setString(5, movie.getDescription());
+        		statement.setString(6, movie.getStarring());
+        		statement.setInt(7, movie.getYear());
+        	}else {
+        		statement.setString(1, movie.getName());
+        		statement.setInt(2,movie.getGenre().getId());
+        		statement.setInt(3, movie.getCountry().getId());
+        		statement.setString(4, movie.getDescription());
+        		statement.setString(5, movie.getStarring());
+        		statement.setInt(6, movie.getYear());
+        	}
+        	
+            //fillStatementArgs(movie, statement);
             connection.commit();
             int ok = statement.executeUpdate();
             if (ok == 0) {
@@ -206,13 +231,13 @@ public class MovieDaoJdbc implements MovieDao {
                 if (resultSet.next()) {
                     return movieFromResultSet(resultSet);
                 } else {
-                    String errorMessage = baseErrorMessage + "No such movie in DB.";
+                    return null; /*
+                	String errorMessage = baseErrorMessage + "No such movie in DB.";
                     log.error(errorMessage);
                     throw new NoSuchEntityException(errorMessage);
+                    */
                 }
             }
-        } catch (NoSuchEntityException e) {
-            throw e;
         } catch (Exception e) {
             log.error(baseErrorMessage + query);
             throw new CantGetEntityListException(baseErrorMessage + query, e);

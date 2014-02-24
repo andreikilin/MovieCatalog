@@ -1,7 +1,6 @@
 package net.muzichko.moviecatalog.dao;
 
 import net.muzichko.moviecatalog.domain.Country;
-import net.muzichko.moviecatalog.domain.MovieCatalogEntity;
 import net.muzichko.moviecatalog.exception.*;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
@@ -37,14 +36,26 @@ public class CountryDaoJdbc implements CountryDao {
         log.info("Adding country " + country.toString());
 
         checkConnection();
-
-        String query = "insert into countries(name) values(?); ";
+        
+        String query;
+        
+        if (country.getId() > 0) {
+        	query = "insert into countries(id, name) values(?, ?); ";
+        	
+        }else {
+        	query = "insert into countries(name) values(?); ";
+        }
 
         String baseErrorMessage = "Country wasn't added in DB " + country.toString() + ". ";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setString(1, country.getName());
+        	if (country.getId() > 0) {
+        		statement.setInt(1, country.getId());
+        		statement.setString(2, country.getName());
+        	}else {
+        		statement.setString(1, country.getName());
+        	}
             int ok = statement.executeUpdate();
             if (ok == 0) {
                 String errorMessage = baseErrorMessage + "statement.executeUpdate(" + query + ") returns 0.";
@@ -62,13 +73,13 @@ public class CountryDaoJdbc implements CountryDao {
     }
 
     @Override
-    public List<MovieCatalogEntity> list() throws CantGetEntityListException, CantGetDBConnection {
+    public List<Country> list() throws CantGetEntityListException, CantGetDBConnection {
 
         log.info("Getting list of movies.");
 
         checkConnection();
 
-        List<MovieCatalogEntity> countryList = new LinkedList<>();
+        List<Country> countryList = new LinkedList<>();
 
         String query = "select * from countries order by name;";
 
@@ -92,7 +103,7 @@ public class CountryDaoJdbc implements CountryDao {
     }
 
     @Override
-    public Country getById(int id) throws CantGetEntityListException, NoSuchEntityException, CantGetDBConnection {
+    public Country getById(int id) throws CantGetEntityListException, CantGetDBConnection {
 
         log.info("Getting movie by id = " + id);
 
@@ -110,14 +121,13 @@ public class CountryDaoJdbc implements CountryDao {
                     return new Country(resultSet.getInt("id"),
                             resultSet.getString("name"));
                 } else {
-                    String errorMessage = baseErrorMessage + "No such country in DB.";
+                	return null;
+                /*  String errorMessage = baseErrorMessage + "No such country in DB.";
                     log.error(errorMessage);
-                    throw new NoSuchEntityException(errorMessage);
+                    throw new NoSuchEntityException(errorMessage); */
                 }
             }
 
-        } catch (NoSuchEntityException e) {
-            throw e;
         } catch (Exception e) {
             log.error(baseErrorMessage + query);
             throw new CantGetEntityListException(baseErrorMessage + query, e);
@@ -161,8 +171,7 @@ public class CountryDaoJdbc implements CountryDao {
 
         checkConnection();
 
-        String query = "delete from countries " +
-                " where id = ?;";
+        String query = "delete from countries  where id = ?;";
 
         String baseErrorMessage = "Couldn't delete country: " + country.toString() + ". ";
 

@@ -1,38 +1,44 @@
 <%@ include file="common/header.jsp" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<form action="${movieFormAction}">
+<form:form method="POST" action="${pageContext.request.contextPath}/${movieFormAction}" commandName="editMovie">
     <b>Add new movie</b>
     <br>
     <br>Name:<br>
-    <textarea name="name" cols="50" rows="4">${name}</textarea>
+    <form:textarea path="name" cols="50" rows="4"/>
+    <form:hidden path="id"/>
+    <span class="error"><form:errors path="name"/></span>
     <Br>
     <br>Country:<br>
-    <select size="1" name="country" required>
-        ${countriesList}
-    </select>
+    <form:select size="1" path="countryId" >
+    	<form:options items="${countryList}" itemLabel="name" itemValue="id"/>
+    </form:select>
+    
     <br>
     <br>Genre:<br>
-    <select size="1" name="genre" required>
-        ${genresList}
-    </select>
+    <form:select size="1" path="genreId" >
+    	<form:options items="${genreList}" itemLabel="name" itemValue="id"/>
+    </form:select>
     <br>
     <br>
     Year
     <br>
-    <input type = "text" size = 4 pattern = [0-9]{4} value="${year}">
+    <form:select path="year" items="${yearList}" />
     <br>
     <br>
     Starring
     <br>
-    <textarea name="starring" cols="50" rows="4">${starring}</textarea>
+    <form:textarea path="starring" cols="50" rows="4"/>
+    <span class="error"><form:errors path="starring"/></span>
     <br>
     <br>
     Description
     <br>
-    <textarea name="description" cols="50" rows="4">${description}</textarea>
+    <form:textarea path="description" cols="50" rows="4"/>
+    <span class="error"><form:errors path="description"/></span>
     <br><br>
 
-    <input type="submit" value = "${buttonAction}">
-</form>   </tr>
+    <input type="submit" value="Save">
+</form:form>   
 
 <%@ include file="common/footer.jsp" %>

@@ -4,7 +4,6 @@ package net.muzichko.moviecatalog.service;
 import net.muzichko.moviecatalog.dao.CountryDao;
 import net.muzichko.moviecatalog.domain.Country;
 import net.muzichko.moviecatalog.domain.CountryValidator;
-import net.muzichko.moviecatalog.domain.MovieCatalogEntity;
 import net.muzichko.moviecatalog.exception.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +60,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public List<MovieCatalogEntity> list() throws MovieCatalogSystemException, CantGetEntityListException {
+    public List<Country> list() throws MovieCatalogSystemException, CantGetEntityListException {
 
         Connection connection = getConnection(dataSource, log);
         countryDao.setConnection(connection);
@@ -83,8 +82,8 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public Country getById(int id) throws NoSuchEntityException, MovieCatalogSystemException, CantGetEntityListException {
-
+    public Country getById(int id) throws MovieCatalogSystemException, CantGetEntityListException {
+    	//System.out.println("Service execution");
         Connection connection = getConnection(dataSource, log);
         countryDao.setConnection(connection);
 
@@ -113,7 +112,7 @@ public class CountryServiceImpl implements CountryService {
         try{
 
             countryDao.alreadyExists(country);
-            CountryValidator.validate(country);
+            //CountryValidator.validate(country);
             countryDao.update(country);
 
             connection.commit();

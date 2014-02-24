@@ -1,6 +1,6 @@
 package net.muzichko.moviecatalog.domain;
 
-public class Genre implements MovieCatalogEntity{
+public class Genre{
 
     private int id;
     private String name;
@@ -21,7 +21,6 @@ public class Genre implements MovieCatalogEntity{
         return id;
     }
 
-    @Override
     public String getCaption() {
         return name;
     }
@@ -46,6 +45,12 @@ public class Genre implements MovieCatalogEntity{
                 '}';
     }
 
+/*    
+    @Override
+    public String toString() {
+        return name;
+    }
+*/    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

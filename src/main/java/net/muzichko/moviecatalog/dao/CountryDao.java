@@ -1,7 +1,6 @@
 package net.muzichko.moviecatalog.dao;
 
 import net.muzichko.moviecatalog.domain.Country;
-import net.muzichko.moviecatalog.domain.MovieCatalogEntity;
 import net.muzichko.moviecatalog.exception.*;
 
 import java.sql.Connection;
@@ -11,9 +10,9 @@ public interface CountryDao {
 
     public void add(Country country) throws CantAddEntityException, MovieCatalogSystemException;
 
-    public List<MovieCatalogEntity> list() throws CantGetEntityListException, MovieCatalogSystemException;
+    public List<Country> list() throws CantGetEntityListException, MovieCatalogSystemException;
 
-    public Country  getById(int id) throws CantGetEntityListException, NoSuchEntityException, MovieCatalogSystemException;
+    public Country  getById(int id) throws CantGetEntityListException, MovieCatalogSystemException;
 
     public void update(Country country) throws CantUpdateEntityException, MovieCatalogSystemException;
 

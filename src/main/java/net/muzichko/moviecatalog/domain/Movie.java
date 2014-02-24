@@ -5,8 +5,8 @@ public class Movie implements MovieCatalogEntity{
     private int id;
     private String name;
     private Genre genre;
-    private String Description;
-    private String Starring;
+    private String description;
+    private String starring;
     private int year;
     private Country country;
 
@@ -17,8 +17,8 @@ public class Movie implements MovieCatalogEntity{
         this.id = id;
         this.name = name;
         this.genre = genre;
-        Description = description;
-        Starring = starring;
+        this.description = description;
+        this.starring = starring;
         this.year = year;
         this.country = country;
     }
@@ -26,8 +26,8 @@ public class Movie implements MovieCatalogEntity{
     public Movie(String name, Genre genre, String description, String starring, int year, Country country) {
         this.name = name;
         this.genre = genre;
-        Description = description;
-        Starring = starring;
+        this.description = description;
+        this.starring = starring;
         this.year = year;
         this.country = country;
     }
@@ -62,19 +62,19 @@ public class Movie implements MovieCatalogEntity{
     }
 
     public String getDescription() {
-        return Description;
+        return this.description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public String getStarring() {
-        return Starring;
+        return this.starring;
     }
 
     public void setStarring(String starring) {
-        Starring = starring;
+        this.starring = starring;
     }
 
     public int getYear() {
@@ -99,8 +99,8 @@ public class Movie implements MovieCatalogEntity{
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", genre=" + genre +
-                ", Description='" + Description + '\'' +
-                ", Starring='" + Starring + '\'' +
+                ", Description='" + description + '\'' +
+                ", Starring='" + starring + '\'' +
                 ", year=" + year +
                 ", country=" + country + '\'' +
                 '}';
@@ -115,8 +115,8 @@ public class Movie implements MovieCatalogEntity{
 
         if (id != movie.id) return false;
         if (year != movie.year) return false;
-        if (Description != null ? !Description.equals(movie.Description) : movie.Description != null) return false;
-        if (Starring != null ? !Starring.equals(movie.Starring) : movie.Starring != null) return false;
+        if (this.description != null ? !this.description.equals(movie.description) : movie.description != null) return false;
+        if (this.starring != null ? !this.starring.equals(movie.starring) : movie.starring != null) return false;
         if (!country.equals(movie.country)) return false;
         if (!genre.equals(movie.genre)) return false;
         if (!name.equals(movie.name)) return false;
@@ -129,8 +129,8 @@ public class Movie implements MovieCatalogEntity{
         int result = id;
         result = 31 * result + name.hashCode();
         result = 31 * result + genre.hashCode();
-        result = 31 * result + (Description != null ? Description.hashCode() : 0);
-        result = 31 * result + (Starring != null ? Starring.hashCode() : 0);
+        result = 31 * result + (this.description != null ? this.description.hashCode() : 0);
+        result = 31 * result + (this.starring != null ? this.starring.hashCode() : 0);
         result = 31 * result + year;
         result = 31 * result + country.hashCode();
         return result;
