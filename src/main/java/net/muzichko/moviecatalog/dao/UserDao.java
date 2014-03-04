@@ -1,7 +1,6 @@
 package net.muzichko.moviecatalog.dao;
 
 
-import net.muzichko.moviecatalog.domain.MovieCatalogEntity;
 import net.muzichko.moviecatalog.domain.User;
 import net.muzichko.moviecatalog.exception.*;
 
@@ -12,7 +11,7 @@ public interface UserDao {
 
     public void add(User user) throws CantAddEntityException, MovieCatalogSystemException;
 
-    public List<MovieCatalogEntity> list() throws CantGetEntityListException, MovieCatalogSystemException;
+    public List<User> list() throws CantGetEntityListException, MovieCatalogSystemException;
 
     public User getById(int id) throws NoSuchEntityException, CantGetEntityListException, MovieCatalogSystemException;
 

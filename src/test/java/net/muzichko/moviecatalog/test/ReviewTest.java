@@ -234,7 +234,7 @@ public class ReviewTest {
             reviewService.add(review);
         }
 
-        List<MovieCatalogEntity> listFromDB = reviewService.list();
+        List<Review> listFromDB = reviewService.list();
 
         for(Review curReview : list){
             if(!listFromDB.contains(curReview)){
@@ -263,7 +263,7 @@ public class ReviewTest {
             list.add(review);
         }
 
-        List<MovieCatalogEntity> listFromDB = reviewService.list();
+        List<Review> listFromDB = reviewService.list();
 
         for(Review curReview : list){
             if(!listFromDB.contains(curReview)){
@@ -327,7 +327,7 @@ public class ReviewTest {
             }
         }
 
-        List<MovieCatalogEntity> listFromDB = reviewService.list();
+        List<Review> listFromDB = reviewService.list();
         for(Review curReview : deletedList){
             if(listFromDB.contains(curReview)){
                 throw new AssertionError("List from DB contains deleted review");
@@ -374,7 +374,7 @@ public class ReviewTest {
             reviewService.add(review);
         }
 
-        List<MovieCatalogEntity> listFromDB = reviewService.listByUser(user);
+        List<Review> listFromDB = reviewService.listByUser(user);
 
         for(Review curReview : list){
             if(!listFromDB.contains(curReview)){
@@ -403,7 +403,7 @@ public class ReviewTest {
             list.add(review);
         }
 
-        List<MovieCatalogEntity> listFromDB = reviewService.listByUser(user2);
+        List<Review> listFromDB = reviewService.listByUser(user2);
 
         for(Review curReview : list){
             if(!listFromDB.contains(curReview)){
@@ -467,7 +467,7 @@ public class ReviewTest {
             }
         }
 
-        List<MovieCatalogEntity> listFromDB = reviewService.listByUser(user);
+        List<Review> listFromDB = reviewService.listByUser(user);
         for(Review curReview : deletedList){
             if(listFromDB.contains(curReview)){
                 throw new AssertionError("List from DB contains deleted review");
@@ -489,8 +489,8 @@ public class ReviewTest {
             reviewService.add(review);
         }
 
-        List<MovieCatalogEntity> list = reviewService.listByUser(user1);
-        for(MovieCatalogEntity curReview : list){
+        List<Review> list = reviewService.listByUser(user1);
+        for(Review curReview : list){
             if(!user1.equals(((Review)curReview).getUser())){
                 throw new AssertionError("List by user contains review with wrong user");
             }
@@ -535,7 +535,7 @@ public class ReviewTest {
             reviewService.add(review);
         }
 
-        List<MovieCatalogEntity> listFromDB = reviewService.listByMovie(movie);
+        List<Review> listFromDB = reviewService.listByMovie(movie);
 
         for(Review curReview : list){
             if(!listFromDB.contains(curReview)){
@@ -563,7 +563,7 @@ public class ReviewTest {
             list.add(review);
         }
 
-        List<MovieCatalogEntity> listFromDB = reviewService.listByMovie(movie2);
+        List<Review> listFromDB = reviewService.listByMovie(movie2);
 
         for(Review curReview : list){
             if(!listFromDB.contains(curReview)){
@@ -625,7 +625,7 @@ public class ReviewTest {
             }
         }
 
-        List<MovieCatalogEntity> listFromDB = reviewService.listByMovie(movie);
+        List<Review> listFromDB = reviewService.listByMovie(movie);
         for(Review curReview : deletedList){
             if(listFromDB.contains(curReview)){
                 throw new AssertionError("List by movie from DB contains deleted review");
@@ -647,8 +647,8 @@ public class ReviewTest {
             reviewService.add(review);
         }
 
-        List<MovieCatalogEntity> list = reviewService.listByMovie(movie1);
-        for(MovieCatalogEntity curReview : list){
+        List<Review> list = reviewService.listByMovie(movie1);
+        for(Review curReview : list){
             if(!movie1.equals(((Review)curReview).getMovie())){
                 throw new AssertionError("List by movie contains review with wrong movie");
             }

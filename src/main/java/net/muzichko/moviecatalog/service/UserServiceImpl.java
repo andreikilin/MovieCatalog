@@ -2,9 +2,7 @@ package net.muzichko.moviecatalog.service;
 
 
 import net.muzichko.moviecatalog.dao.UserDao;
-import net.muzichko.moviecatalog.domain.MovieCatalogEntity;
 import net.muzichko.moviecatalog.domain.User;
-import net.muzichko.moviecatalog.domain.UserValidator;
 import net.muzichko.moviecatalog.exception.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +35,7 @@ public class UserServiceImpl implements UserService {
         try{
 
             userDao.alreadyExists(user);
-            UserValidator.validate(user);
+            //UserValidator.validate(user);
             userDao.add(user);
 
             connection.commit();
@@ -61,7 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<MovieCatalogEntity> list() throws MovieCatalogSystemException, CantGetEntityListException {
+    public List<User> list() throws MovieCatalogSystemException, CantGetEntityListException {
 
         Connection connection = getConnection(dataSource, log);
         userDao.setConnection(connection);
@@ -113,7 +111,7 @@ public class UserServiceImpl implements UserService {
         try{
 
             userDao.alreadyExists(user);
-            UserValidator.validate(user);
+            //UserValidator.validate(user);
             userDao.update(user);
 
             connection.commit();

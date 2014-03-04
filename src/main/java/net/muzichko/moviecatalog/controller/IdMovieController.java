@@ -19,10 +19,10 @@ public class IdMovieController {
     private MovieService movieService;
 	
 	@RequestMapping("/movie/{movieId}")
-    public String movie(@PathVariable String movieId, ModelMap model) {
+    public String movie(@PathVariable Integer movieId, ModelMap model) {
         try{
             
-        	Movie movie = movieService.getById(Integer.parseInt(movieId));
+        	Movie movie = movieService.getById(movieId);
         	Genre genre = movie.getGenre();
         	Country country = movie.getCountry();
         	model.addAttribute("name", movie.getName());

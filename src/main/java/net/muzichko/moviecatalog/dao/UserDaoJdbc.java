@@ -1,7 +1,6 @@
 package net.muzichko.moviecatalog.dao;
 
 
-import net.muzichko.moviecatalog.domain.MovieCatalogEntity;
 import net.muzichko.moviecatalog.domain.User;
 import net.muzichko.moviecatalog.exception.*;
 import org.apache.log4j.Logger;
@@ -39,15 +38,29 @@ public class UserDaoJdbc implements UserDao {
 
         checkConnection();
 
-        String query = "insert into users(login, password, email) values(?,?,?); ";
-
+        String query;
+        
+        if (user.getId() > 0) {
+        	query = "insert into users(id, login, password, email) values(?,?,?,?); ";
+        	
+        }else {
+        	query = "insert into users(login, password, email) values(?,?,?); ";
+        }
         String baseErrorMessage = "User wasn't added in DB " + user.toString() + ". ";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setString(1, user.getLogin());
-            statement.setString(2, user.getPassword());
-            statement.setString(3, user.getEmail());
+            
+            if (user.getId() > 0) {
+        		statement.setInt(1, user.getId());
+        		statement.setString(2, user.getLogin());
+                statement.setString(3, user.getPassword());
+                statement.setString(4, user.getEmail());
+        	}else {
+        		statement.setString(1, user.getLogin());
+                statement.setString(2, user.getPassword());
+                statement.setString(3, user.getEmail());
+        	}
             int ok = statement.executeUpdate();
             if (ok == 0) {
                 String errorMessage = baseErrorMessage + "statement.executeUpdate(" + query + ") returns 0.";
@@ -65,13 +78,13 @@ public class UserDaoJdbc implements UserDao {
     }
 
     @Override
-    public List<MovieCatalogEntity> list() throws CantGetEntityListException, CantGetDBConnection {
+    public List<User> list() throws CantGetEntityListException, CantGetDBConnection {
 
         log.info("Getting list of users.");
 
         checkConnection();
 
-        List<MovieCatalogEntity> userList = new LinkedList<>();
+        List<User> userList = new LinkedList<>();
 
         String query = "select * from users order by login;";
 
@@ -112,13 +125,12 @@ public class UserDaoJdbc implements UserDao {
                     return new User(resultSet.getInt("id"),
                             resultSet.getString("login"), resultSet.getString("password"), resultSet.getString("email"));
                 } else {
-                    String errorMessage = baseErrorMessage + "No such user in DB.";
+                    return null;
+                /*	String errorMessage = baseErrorMessage + "No such user in DB.";
                     log.error(errorMessage);
-                    throw new NoSuchEntityException(errorMessage);
+                    throw new NoSuchEntityException(errorMessage); */
                 }
             }
-        } catch (NoSuchEntityException e) {
-            throw e;
         } catch (Exception e) {
             log.error(baseErrorMessage + query);
             throw new CantGetEntityListException(baseErrorMessage + query, e);

@@ -3,7 +3,7 @@ package net.muzichko.moviecatalog.domain;
 
 import java.sql.Timestamp;
 
-public class Review implements MovieCatalogEntity{
+public class Review{
 
     private int id;
     private Movie movie;
@@ -33,18 +33,6 @@ public class Review implements MovieCatalogEntity{
 
     public int getId() {
         return id;
-    }
-
-    @Override
-    public String getCaption() {
-
-        String newLine = System.getProperty("line.separator");
-
-        return movie.getCaption() + newLine +
-                user.getCaption() + newLine +
-                "Rating: " + rating + newLine +
-                comment + newLine +
-                timestamp;
     }
 
     public void setId(int id) {
@@ -140,5 +128,16 @@ public class Review implements MovieCatalogEntity{
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
         result = 31 * result + timestamp.hashCode();
         return result;
+    }
+    
+    public String getCaption() {
+
+        String newLine = System.getProperty("line.separator");
+
+        return movie.getCaption() + newLine +
+                user.getCaption() + newLine +
+                "Rating: " + rating + newLine +
+                comment + newLine +
+                timestamp;
     }
 }

@@ -2,6 +2,7 @@ package net.muzichko.moviecatalog.form;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import net.muzichko.moviecatalog.domain.Country;
@@ -15,13 +16,14 @@ public class MovieEditForm {
 	@Size(min = 2, max = 30, message = "Name can be more than 2 characters and less than 30 characters")
 	private String name;
 
-	@Size(min = 4, max = 50, message = "Starring can be more than 4 characters and less than 50 characters")
+	@Size(min = 4, max = 100, message = "Starring can be more than 4 characters and less than 100 characters")
 	private String starring;
 
 	private int countryId;
 
 	private int genreId;
 
+	@NotNull(message = "You must set year")
 	private int year;
 
 	private int id;
@@ -30,7 +32,7 @@ public class MovieEditForm {
 	
 	private List<Genre> genreList;
 	
-	@Size(min = 10, max = 200, message = "Description can be more than 10 characters and less than 200 characters")
+	@Size(min = 10, max = 500, message = "Description can be more than 10 characters and less than 500 characters")
 	private String description;
 
 	public String getName() {

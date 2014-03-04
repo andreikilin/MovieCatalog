@@ -41,7 +41,7 @@ public class EditMovieController {
 	private CountryService countryService;
 
 	@RequestMapping(value = "/edit/movie/{movieId}", method = RequestMethod.GET)
-	public String editFormMovie(@PathVariable Integer movieId, ModelMap model) {
+	public String editMovie(@PathVariable Integer movieId, ModelMap model) {
 
 		try {
 			Movie movie = movieService.getById(movieId);
@@ -61,7 +61,7 @@ public class EditMovieController {
 			// Initialization form fields
 			editForm.importMovie(movie);
 
-			return "movieForm";
+			return "editMovieForm";
 		} catch (MovieCatalogException e) {
 			model.addAttribute("stackTrace", e.getMessage());
 			return "error";
@@ -69,9 +69,9 @@ public class EditMovieController {
 	}
 
 	@RequestMapping(value = "/edit/movie/{movieId}", method = RequestMethod.POST)
-	public String processEditMovive(
+	public String processEditMovie(
 			@Valid @ModelAttribute("editMovie") MovieEditForm editForm,
-			BindingResult result, ModelMap model, @PathVariable String movieId)
+			BindingResult result, ModelMap model, @PathVariable Integer movieId)
 			throws NoSuchEntityException, MovieCatalogSystemException,
 			CantGetEntityListException, EntityAlreadyExistsException,
 			ValidationMovieCatalogException, CantUpdateEntityException {
@@ -88,7 +88,7 @@ public class EditMovieController {
 			model.put("yearList", yearList);
 			model.put("editMovie", editForm);
 			model.put("movieFormAction", "edit/movie/" + movieId);
-			return "movieForm";
+			return "editMovieForm";
 
 		} else {
 			Movie movie = new Movie(editForm.getId(), editForm.getName(),

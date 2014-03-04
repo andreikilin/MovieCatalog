@@ -9,22 +9,20 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
 import java.sql.*;
 import java.util.List;
 
 @Repository
 public class ReviewDaoJdbcTemplates implements ReviewDao {
 
-    @Autowired
-    private DataSource dataSource;
+    
 
     @Autowired
     private JdbcTemplate jdbcTemplate;       // TODO: connection exception ????????
 
     static Logger log = Logger.getLogger(ReviewDaoJdbcTemplates.class);
 
-    static final class ReviewMapper implements RowMapper<MovieCatalogEntity> {
+    static final class ReviewMapper implements RowMapper<Review> {
 
         public Review mapRow(ResultSet rs, int rowNum) throws SQLException {
 
@@ -80,7 +78,7 @@ public class ReviewDaoJdbcTemplates implements ReviewDao {
     }
 
     @Override
-    public List<MovieCatalogEntity> list() throws CantGetEntityListException {
+    public List<Review> list() throws CantGetEntityListException {
 
         String query = "select r.*, u.*, m.*, c.name as country, g.name as genre, rr.average_rating from " +
                 "reviews as r " +
@@ -103,7 +101,7 @@ public class ReviewDaoJdbcTemplates implements ReviewDao {
     }
 
     @Override
-    public List<MovieCatalogEntity> listByUser(User user) throws CantGetEntityListException {
+    public List<Review> listByUser(User user) throws CantGetEntityListException {
 
         String query = "select r.*, u.*, m.*, c.name as country, g.name as genre, rr.average_rating from " +
                 "reviews as r " +
@@ -126,7 +124,7 @@ public class ReviewDaoJdbcTemplates implements ReviewDao {
     }
 
     @Override
-    public List<MovieCatalogEntity> listByMovie(Movie movie) throws CantGetEntityListException {
+    public List<Review> listByMovie(Movie movie) throws CantGetEntityListException {
 
         String query = "select r.*, u.*, m.*, c.name as country, g.name as genre, rr.average_rating from " +
                 "reviews as r " +
@@ -149,7 +147,7 @@ public class ReviewDaoJdbcTemplates implements ReviewDao {
     }
 
     @Override
-    public MovieCatalogEntity getById(int id) throws NoSuchEntityException, CantGetEntityListException {
+    public Review getById(int id) throws NoSuchEntityException, CantGetEntityListException {
 
         String query = "select r.*, u.*, m.*, c.name as country, g.name as genre, rr.average_rating from " +
                 "reviews as r " +
@@ -164,7 +162,7 @@ public class ReviewDaoJdbcTemplates implements ReviewDao {
         String baseErrorMessage = "Couldn't get review by id = " + id + ". ";
 
         try{
-            MovieCatalogEntity review = jdbcTemplate.queryForObject(query, new ReviewMapper(), id);
+            Review review = jdbcTemplate.queryForObject(query, new ReviewMapper(), id);
             if(review != null){
                 return review;
             } else {

@@ -24,34 +24,34 @@ public class ReviewServiceImpl implements ReviewService {
 
         // no check exists for review
 
-        ReviewValidator.validate(review);
+        //ReviewValidator.validate(review);
         reviewDao.add(review);
 
     }
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<MovieCatalogEntity> list() throws CantGetEntityListException {
+    public List<Review> list() throws CantGetEntityListException {
 
         return reviewDao.list();
 
     }
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<MovieCatalogEntity> listByUser(User user) throws CantGetEntityListException {
+    public List<Review> listByUser(User user) throws CantGetEntityListException {
 
         return reviewDao.listByUser(user);
 
     }
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<MovieCatalogEntity> listByMovie(Movie movie) throws CantGetEntityListException {
+    public List<Review> listByMovie(Movie movie) throws CantGetEntityListException {
 
         return reviewDao.listByMovie(movie);
 
     }
 
     @Override
-    public MovieCatalogEntity getById(int id) throws CantGetEntityListException, NoSuchEntityException {
+    public Review getById(int id) throws CantGetEntityListException, NoSuchEntityException {
 
         return reviewDao.getById(id);
 
@@ -63,7 +63,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         // no check exists fo review
 
-        ReviewValidator.validate(review);
+        //ReviewValidator.validate(review);
         reviewDao.update(review);
 
     }
